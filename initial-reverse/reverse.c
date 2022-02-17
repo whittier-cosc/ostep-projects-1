@@ -59,16 +59,16 @@ int main(int argc, char *argv[]) {
     if (argc == 3) {
         struct stat st_in, st_out;
         stat(argv[1], &st_in);
+        if ((fout = fopen(argv[2], "w")) == NULL) {
+            fprintf(stderr, "reverse: cannot open file '%s'\n", argv[2]);
+            exit(1);
+        }
         if (stat(argv[2], &st_out) < 0) {
-            fprintf(stderr, "reverse: cannot open file '%s'\n", argv[1]);
+            fprintf(stderr, "reverse: cannot open file '%s'\n", argv[2]);
             exit(1);
         }
         if (st_in.st_ino == st_out.st_ino) {
             fprintf(stderr, "reverse: input and output file must differ\n");
-            exit(1);
-        }
-        if ((fout = fopen(argv[2], "w")) == NULL) {
-            fprintf(stderr, "reverse: cannot open file '%s'\n", argv[2]);
             exit(1);
         }
     }
