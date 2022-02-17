@@ -44,17 +44,18 @@ int main(int argc, char *argv[]) {
     // not fail, because if we get here, we have already successfully called
     // `fopen` on <infile>.
     // 
-    // 2. Call `stat` to obtain a `struct stat` for <outfile>. If `stat` fails
+    // 2. Try to open <outfile> for writing and set `fout` to the FILE pointer
+    // returned by `fopen`. If `fopen` fails, print the required error message 
+    // and exit with status 1.
+    //
+    // 3. Call `stat` to obtain a `struct stat` for <outfile>. If `stat` fails
     // (because it couldn't open the file), print the required error message and
     // exit with status 1. 
     //
-    // 3. If <infile> and <outfile> are links to the same file (i.e. the inode
+    // 4. If <infile> and <outfile> are links to the same file (i.e. the inode
     // numbers in their `struct stat`s are the same), print the required error
     // message and exit with status 1. 
     //
-    // 4. Try to open <outfile> for writing and set `fout` to the FILE pointer
-    // returned by `fopen`. If `fopen` fails, print the required error message 
-    // and exit with status 1.
     if (argc == 3) {
         struct stat st_in, st_out;
         // TODO
